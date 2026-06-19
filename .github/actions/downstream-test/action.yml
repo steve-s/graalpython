@@ -91,8 +91,9 @@ runs:
       run: |
         set -euo pipefail
 
-        python3 -m pip install --user "uv==0.11.21"
-        echo "$(python3 -m site --user-base)/bin" >> "$GITHUB_PATH"
+        python3 -m venv "$RUNNER_TEMP/uv-venv"
+        "$RUNNER_TEMP/uv-venv/bin/python" -m pip install "uv==0.11.21"
+        echo "$RUNNER_TEMP/uv-venv/bin" >> "$GITHUB_PATH"
 
     - name: Get GraalPy CE dev build
       if: ${{ inputs.platform == 'macos' }}
